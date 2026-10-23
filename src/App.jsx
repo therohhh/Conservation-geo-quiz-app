@@ -79,6 +79,7 @@ export default function App() {
     ? Math.round((score / quizQuestions.length) * 100)
     : 0;
 
+  // RESULTS SCREEN
   if (selectedQuiz && showResults) {
     return (
       <div className="app">
@@ -93,6 +94,7 @@ export default function App() {
           >
             ROHITH<span>.</span>
           </a>
+
           <span className="nav-label">RESULTS</span>
         </header>
 
@@ -108,6 +110,7 @@ export default function App() {
               {score}
               <span> / {quizQuestions.length}</span>
             </p>
+
             <div className="result-percent">{percentage}%</div>
           </div>
 
@@ -206,6 +209,7 @@ export default function App() {
     );
   }
 
+  // QUIZ SCREEN
   if (selectedQuiz && quizQuestions.length > 0) {
     const question = quizQuestions[currentIndex];
     const selectedOption = selectedAnswers[question.id];
@@ -232,9 +236,8 @@ export default function App() {
           <div className="quiz-progress">
             <div
               style={{
-                width: `${
-                  ((currentIndex + 1) / quizQuestions.length) * 100
-                }%`,
+                width: `${((currentIndex + 1) / quizQuestions.length) * 100
+                  }%`,
               }}
             />
           </div>
@@ -313,69 +316,94 @@ export default function App() {
     );
   }
 
+  // HOMEPAGE ONLY — FULL BACKGROUND PORTRAIT
   return (
-    <div className="app">
-      <header className="navbar">
-        <a className="brand" href="#">
-          ROHITH<span>.</span>
-        </a>
-        <span className="nav-label">NPTEL</span>
-      </header>
+    <div className="home-page">
+      <div className="home-background" aria-hidden="true">
+        <img
+          src={`${import.meta.env.BASE_URL}profile.jpeg`}
+          alt=""
+        />
+      </div>
 
-      <main>
-        <section className="hero">
-          <h1>
-            Conservation
-            <br />
-            <span>Geography.</span>
-          </h1>
+      <div className="home-overlay" aria-hidden="true" />
 
-          <div className="quiz-cards">
-            <button
-              className="quiz-card"
-              onClick={() => startQuiz("Full Quiz")}
-            >
-              <span className="card-number">01</span>
-              <h2>Full Quiz</h2>
-              <span className="card-arrow">❤️</span>
-            </button>
+      <div className="app home-content">
+        <header className="navbar">
 
-            <button
-              className="quiz-card"
-              onClick={() => startQuiz("Random Quiz")}
-            >
-              <span className="card-number">02</span>
-              <h2>Random Quiz</h2>
-              <span className="card-arrow">❤️</span>
-            </button>
-          </div>
-        </section>
+          <a className="brand" href="#" onClick={(event) => {
+            event.preventDefault();
+            goHome();
+          }}>
+            <img
+              className="brand-logo"
+              src={`${import.meta.env.BASE_URL}profile.jpeg`}
+              alt=""
+            />
+            <span className="brand-name">
+              ROHITH<span>.</span>
+            </span>
+          </a>
 
-        <section className="weeks-section">
-          <div className="weeks-heading">
-            <h2>
-              Choose a week<span>.</span>
-            </h2>
-            <span>1 — 12</span>
-          </div>
 
-          <div className="week-grid">
-            {weeks.map((week) => (
+          <span className="nav-label">NPTEL</span>
+        </header>
+
+        <main>
+          <section className="hero">
+            <h1 className="hero-title">
+              Conservation
+              <br />
+              Geography.
+            </h1>
+
+            <div className="quiz-cards">
               <button
-                className="week-card"
-                key={week}
-                onClick={() => startQuiz(`Week ${week}`)}
+                className="quiz-card"
+                onClick={() => startQuiz("Full Quiz")}
               >
-                <span className="week-number">
-                  {String(week).padStart(2, "0")}
-                </span>
-                <span className="week-title">Week {week}</span>
-                <span className="week-arrow">🐯</span>
+                <span className="card-number">01</span>
+                <h2>Full Quiz</h2>
+                <span className="card-arrow">❤️</span>
               </button>
-            ))}
-          </div>
-        </section>
-      </main>
+
+              <button
+                className="quiz-card"
+                onClick={() => startQuiz("Random Quiz")}
+              >
+                <span className="card-number">02</span>
+                <h2>Random Quiz</h2>
+                <span className="card-arrow">❤️</span>
+              </button>
+            </div>
+          </section>
+
+          <section className="weeks-section">
+            <div className="weeks-heading">
+              <h2>
+                Choose a week<span>.</span>
+              </h2>
+              <span>1 — 12</span>
+            </div>
+
+            <div className="week-grid">
+              {weeks.map((week) => (
+                <button
+                  className="week-card"
+                  key={week}
+                  onClick={() => startQuiz(`Week ${week}`)}
+                >
+                  <span className="week-number">
+                    {String(week).padStart(2, "0")}
+                  </span>
+                  <span className="week-title">Week {week}</span>
+                  <span className="week-arrow">🐯</span>
+                </button>
+              ))}
+            </div>
+          </section>
+        </main>
+      </div>
     </div>
   );
 }
